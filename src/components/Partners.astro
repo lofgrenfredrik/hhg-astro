@@ -1,0 +1,55 @@
+---
+import PartnersList from "./PartnersList.astro";
+---
+
+<section>
+  <div class="container">
+    <span>Our Partners</span>
+    <h2>Trusted by the Finest</h2>
+    <p>
+      We collaborate with the world{"'"}s most prestigious brands to deliver
+      exceptional experiences.
+    </p>
+    <PartnersList />
+  </div>
+</section>
+
+<style>
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding-block: 4rem;
+    text-align: center;
+  }
+
+  section span {
+    display: block;
+    font-family: var(--font-open-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: var(--font-unna);
+    font-size: 2rem;
+    color: var(--foreground);
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-family: var(--font-open-sans);
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: var(--muted-foreground);
+  }
+
+  @media (min-width: 900px) {
+    h2 {
+      font-size: 3rem;
+    }
+  }
+</style>

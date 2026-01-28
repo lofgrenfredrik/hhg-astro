@@ -1,0 +1,42 @@
+---
+import { CldImage } from "astro-cloudinary";
+import { getCollection } from "astro:content";
+
+const partners = await getCollection("partners");
+---
+
+<div class="partners-grid">
+  {
+    partners.map((partner) => (
+      <div class="partner-logo">
+        <CldImage
+          src={partner.data.public_id}
+          alt={`${partner.data.context?.custom?.alt || partner.data.display_name}`}
+          title={partner.data.context?.custom?.caption || ""}
+          width={200}
+          height={170}
+        />
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .partners-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .partner-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--foreground);
+    padding: 0.5rem 2.5rem;
+    border-radius: 3%;
+  }
+</style>

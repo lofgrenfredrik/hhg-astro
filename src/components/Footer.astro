@@ -1,0 +1,166 @@
+---
+import { Picture } from "astro:assets";
+import LogoText from "../assets/LogoText.png";
+---
+
+<footer>
+  <div class="container">
+    <div class="logo-container">
+      <Picture src={LogoText} alt="Henx Hospitality Group" />
+      <p>
+        Luxury international hospitality group delivering premium services with
+        Nordic elegance.
+      </p>
+    </div>
+
+    <div class="contact-sections">
+      <div class="contact-container">
+        <h3>Follow</h3>
+        <div class="contact-socials">
+          <a
+            href="https://www.facebook.com/Henxhospitalitygroup"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>Facebook</span>
+          </a>
+          <a
+            href="https://www.facebook.com/Henxhospitalitygroup"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>Instagram</span>
+          </a>
+          <a
+            href="https://www.facebook.com/Henxhospitalitygroup"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>LinkedIn</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-container">
+        <h3>Enquiries</h3>
+        <div class="contact-info">
+          <p>Email</p>
+          <a href="mailto:contact@henxhospitality.com"
+            >contact@henxhospitality.com</a
+          >
+        </div>
+        <div class="contact-info">
+          <p>Phone</p>
+          <a href="tel:+46701234567">+46 70 123 45 67</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="copyright">
+  <p>
+    © {new Date().getFullYear()} Henx Hospitality Group. All rights reserved.
+  </p>
+</div>
+
+<style>
+  footer {
+    border-top: 1px solid var(--border-color);
+    margin-top: 4rem;
+    padding-block: 5rem;
+    background-color: var(--background);
+  }
+
+  img {
+    height: 78px;
+    width: auto;
+  }
+
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    gap: 6rem;
+  }
+
+  .logo-container p {
+    margin-top: 2rem;
+  }
+
+  .contact-sections {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4rem;
+  }
+
+  .contact-socials {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contact-socials a {
+    text-decoration: none;
+    color: var(--muted-foreground);
+    border-left: 1px solid var(--primary);
+    padding-left: 0.75rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .contact-socials a:hover {
+    color: var(--primary);
+    transform: scale(1.05);
+    border-width: 3px;
+  }
+
+  .contact-container h3 {
+    font-family: var(--font-unna);
+    color: var(--foreground);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-info + .contact-info {
+    margin-top: 1.5rem;
+  }
+
+  .contact-info p {
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+  }
+
+  .contact-info a {
+    text-decoration: none;
+    color: var(--muted-foreground);
+    font-family: var(--font-open-sans);
+    display: block;
+    margin-top: 0.25rem;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .contact-info a:hover {
+    color: var(--primary);
+  }
+
+  .copyright {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    margin-top: 4rem;
+    padding-block: 1.5rem;
+    font-size: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact-sections {
+      flex-direction: row;
+      gap: 2rem;
+    }
+  }
+</style>

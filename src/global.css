@@ -1,0 +1,47 @@
+/*
+  The CSS in this style tag is based off of Bear Blog's default CSS.
+  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
+  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+ */
+
+:root {
+	--background: rgb(2, 2, 2);
+	/* --background: rgb(23, 24, 28); */
+
+  --foreground: rgb(238, 238, 238);
+  --muted-foreground: rgb(143, 143, 143);
+  --primary: rgb(198, 177, 132);
+  --border: rgb(34, 34, 34);
+  --primary-light: color-mix(in oklab, var(--primary), white 50%);
+  --border-color: color-mix(in oklab, var(--border), transparent 20%);
+
+  --max-width: 72rem;
+	--box-shadow:
+		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px
+		rgba(var(--gray), 33%);
+}
+
+body {
+  height: 100%;
+  margin: 0 auto;
+  padding-inline: 2rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-open-sans);
+  background-color: var(--background);
+}
+
+h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-unna);
+    color: var(--foreground);
+    font-weight: 400;
+    margin: 0;
+  }
+
+p {
+  margin: 0;
+}
