@@ -13,9 +13,12 @@ const partners = await getCollection("partners");
           src={partner.data.public_id}
           alt={`${partner.data.context?.custom?.alt || `${partner.data.display_name} logo`}`}
           title={`${partner.data.context?.custom?.caption || `Official logo for ${partner.data.display_name}`}`}
-          width={200}
-          height={170}
           loading="lazy"
+          crop={{
+            width: 200,
+            height: 200,
+            type: "fit",
+          }}
         />
       </div>
     ))
