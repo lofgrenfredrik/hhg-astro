@@ -4,7 +4,7 @@ import LogoSimple from "../assets/LogoSimple.png";
 ---
 
 <header>
-  <div>
+  <div class="max-width-wrapper">
     <a href="/">
       <Picture
         src={LogoSimple}
@@ -14,8 +14,8 @@ import LogoSimple from "../assets/LogoSimple.png";
       />
     </a>
     <nav>
-      <a href="/">Home</a>
-      <a href="/events">Events</a>
+      <a href="/" class="link-primary">Home</a>
+      <a href="/events" class="link-primary">Events</a>
     </nav>
   </div>
 </header>
@@ -23,23 +23,20 @@ import LogoSimple from "../assets/LogoSimple.png";
 <style>
   header {
     position: fixed;
-    background-color: var(--background);
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto;
     border-bottom: 1px solid var(--border-color);
     z-index: 100;
+    background-color: var(--background);
   }
 
-  header div {
+  .max-width-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-block: 1.5rem;
-    margin: 0 auto;
     padding-inline: 2rem;
   }
 
@@ -53,18 +50,15 @@ import LogoSimple from "../assets/LogoSimple.png";
     gap: 2rem;
   }
 
-  nav a {
-    text-decoration: none;
-    text-transform: uppercase;
-    color: var(--muted-foreground);
-    font-family: var(--font-open-sans);
-    font-size: 1rem;
-    transition: color 0.3s ease-in-out;
-    letter-spacing: 0.05em;
+  nav {
+    display: flex;
+    gap: 2rem;
   }
 
-  nav a:hover {
-    color: var(--primary);
+  .link-primary {
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
   }
 
   @media (min-width: 600px) {

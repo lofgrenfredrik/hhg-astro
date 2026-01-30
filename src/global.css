@@ -45,3 +45,54 @@ h1,
 p {
   margin: 0;
 }
+
+/* Layout container utility used by Header, Footer, About, Partners */
+.max-width-wrapper {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Section header pattern used by About, Partners */
+.section-header {
+  padding-block: 4rem;
+  text-align: center;
+}
+
+.section-header .pre-title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.section-header .title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Body typography used by About, Partners, Footer */
+.text-body {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+/* Primary link styling used by Header, Footer */
+.link-primary {
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+  color: var(--muted-foreground);
+}
+
+.link-primary:hover {
+  color: var(--primary);
+}
+
+/* Responsive section header - matches About.astro desktop padding */
+@media (min-width: 1024px) {
+  .section-header {
+    padding-block: 7rem;
+  }
+}

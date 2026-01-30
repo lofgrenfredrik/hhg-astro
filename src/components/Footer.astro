@@ -4,10 +4,10 @@ import LogoText from "../assets/LogoText.png";
 ---
 
 <footer>
-  <div class="container">
+  <div class="max-width-wrapper container">
     <div class="logo-container">
       <Picture src={LogoText} alt="Henx Hospitality Group" />
-      <p>
+      <p class="text-body">
         Luxury international hospitality group delivering premium services with
         Nordic elegance.
       </p>
@@ -21,6 +21,7 @@ import LogoText from "../assets/LogoText.png";
             href="https://www.facebook.com/Henxhospitalitygroup"
             target="_blank"
             rel="noopener noreferrer"
+            class="link-primary"
           >
             <span>Facebook</span>
           </a>
@@ -28,6 +29,7 @@ import LogoText from "../assets/LogoText.png";
             href="https://www.facebook.com/Henxhospitalitygroup"
             target="_blank"
             rel="noopener noreferrer"
+            class="link-primary"
           >
             <span>Instagram</span>
           </a>
@@ -35,6 +37,7 @@ import LogoText from "../assets/LogoText.png";
             href="https://www.facebook.com/Henxhospitalitygroup"
             target="_blank"
             rel="noopener noreferrer"
+            class="link-primary"
           >
             <span>LinkedIn</span>
           </a>
@@ -45,13 +48,13 @@ import LogoText from "../assets/LogoText.png";
         <h3>Enquiries</h3>
         <div class="contact-info">
           <p>Email</p>
-          <a href="mailto:contact@henxhospitality.com"
+          <a href="mailto:contact@henxhospitality.com" class="link-primary"
             >contact@henxhospitality.com</a
           >
         </div>
         <div class="contact-info">
           <p>Phone</p>
-          <a href="tel:+46701234567">+46 70 123 45 67</a>
+          <a href="tel:+46701234567" class="link-primary">+46 70 123 45 67</a>
         </div>
       </div>
     </div>
@@ -69,7 +72,6 @@ import LogoText from "../assets/LogoText.png";
     border-top: 1px solid var(--border-color);
     margin-top: 4rem;
     padding-block: 5rem;
-    background-color: var(--background);
   }
 
   img {
@@ -78,8 +80,6 @@ import LogoText from "../assets/LogoText.png";
   }
 
   .container {
-    max-width: var(--max-width);
-    margin: 0 auto;
     display: grid;
     gap: 6rem;
   }
@@ -101,23 +101,21 @@ import LogoText from "../assets/LogoText.png";
     gap: 1.5rem;
   }
 
-  .contact-socials a {
-    text-decoration: none;
-    color: var(--muted-foreground);
+  .contact-socials .link-primary {
     border-left: 1px solid var(--primary);
     padding-left: 0.75rem;
-    transition: all 0.3s ease-in-out;
+    border-width: 1px;
+    transition:
+      border-width 0.3s ease-in-out,
+      transform 0.3s ease-in-out;
   }
 
-  .contact-socials a:hover {
-    color: var(--primary);
+  .contact-socials .link-primary:hover {
     transform: scale(1.05);
     border-width: 3px;
   }
 
   .contact-container h3 {
-    font-family: var(--font-unna);
-    color: var(--foreground);
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     letter-spacing: 0.05em;
@@ -132,17 +130,9 @@ import LogoText from "../assets/LogoText.png";
     color: var(--primary);
   }
 
-  .contact-info a {
-    text-decoration: none;
-    color: var(--muted-foreground);
-    font-family: var(--font-open-sans);
+  .contact-info .link-primary {
     display: block;
     margin-top: 0.25rem;
-    transition: color 0.3s ease-in-out;
-  }
-
-  .contact-info a:hover {
-    color: var(--primary);
   }
 
   .copyright {

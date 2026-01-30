@@ -1,15 +1,15 @@
 <section>
-  <div class="container">
-    <span>About us</span>
-    <h2>Redifining Luxury Hospitality</h2>
-    <div class="content-grid">
+  <div class="max-width-wrapper section-header about-container">
+    <span class="pre-title">About us</span>
+    <h2 class="title">Redifining Luxury Hospitality</h2>
+    <div class="about-grid">
       <div class="column">
-        <p>
+        <p class="text-body">
           Welcome to Henx Hospitality Group, the epitome of luxury events rooted
           in Stockholm, Sweden, and extending its global influence in Dubai,
           United Arab Emirates.
         </p>
-        <p>
+        <p class="text-body">
           From high-profile corporate gatherings to intimate soirées, our
           expertise spans event planning, and full exicution, catering, and
           entertainment, ensuring seamless, unforgettable moments.
@@ -17,13 +17,14 @@
       </div>
 
       <div class="column">
-        <p>
+        <p class="text-body">
           At the heart of our commitment to excellence is our exclusive venture
-          - Arctic Roe of Scandinavia. As co-owners, we bring the finest Swedish
-          black caviar to the UAE, enriching gastronomic experiences and adding
-          a touch of luxury to every event. Embark on the Henx Experience, where
-          flawless execution meets immersive events.
-        </p><p>
+          - <a href="Arctic Roe of Scandinavia">Arctic Roe of Scandinavia</a>.
+          As co-owners, we bring the finest Swedish black caviar to the UAE,
+          enriching gastronomic experiences and adding a touch of luxury to
+          every event. Embark on the Henx Experience, where flawless execution
+          meets immersive events.
+        </p><p class="text-body">
           Our seasoned professionals turn visions into realities, allowing you
           to revel in the magic of the moment. Indulge in luxury, embrace the
           extraordinary - Welcome to Henx Hospitality Group.
@@ -38,38 +39,7 @@
     border-top: 1px solid var(--border-color);
   }
 
-  .container {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding-block: 4rem;
-    text-align: center;
-  }
-
-  section span {
-    font-family: var(--font-open-sans);
-    font-size: 1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--primary);
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.1em;
-  }
-
-  h2 {
-    font-family: var(--font-unna);
-    font-size: 2rem;
-    color: var(--foreground);
-    margin-bottom: 1rem;
-  }
-
-  p {
-    font-family: var(--font-open-sans);
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    color: var(--muted-foreground);
-  }
-
-  .content-grid {
+  .about-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 4rem;
@@ -83,16 +53,17 @@
     gap: 1.5rem;
   }
 
+  a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
   @media (min-width: 900px) {
-    h2 {
+    .title {
       font-size: 3rem;
     }
 
-    .container {
-      padding-block: 7rem;
-    }
-
-    .content-grid {
+    .about-grid {
       grid-template-columns: 1fr 1fr;
       margin-top: 4rem;
     }
