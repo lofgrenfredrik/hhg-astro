@@ -1,6 +1,27 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { AstroSeo } from "@astrolib/seo";
 ---
+
+<AstroSeo
+  title="Henx Hospitality Group Events"
+  description="Explore the events and experiences offered by Henx Hospitality Group."
+  openGraph={{
+    type: "website",
+    url: "https://henxhospitality.com/events",
+    title: "Henx Hospitality Group Events",
+    description:
+      "Explore the events and experiences offered by Henx Hospitality Group.",
+    images: [
+      {
+        url: "https://henxhospitality.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Henx Hospitality Group Events",
+      },
+    ],
+  }}
+/>
 
 <Layout>
   <h1>Henx Hospitality Group EVDENTS</h1>

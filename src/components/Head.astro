@@ -6,14 +6,21 @@ import { Font } from "astro:assets";
 <Font cssVariable="--font-unna" preload />
 <Font cssVariable="--font-open-sans" preload />
 
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="generator" content={Astro.generator} />
 <!-- Essential Meta Tags for Accessibility & SEO -->
-<meta name="description" content="Henx Hospitality Group - Luxury international hospitality group delivering premium services with Nordic elegance in Stockholm and Dubai." />
+
 <meta name="author" content="Henx Hospitality Group" />
-<meta name="keywords" content="luxury hospitality, premium services, Stockholm, Dubai, events, catering" />
+<meta
+  name="keywords"
+  content="luxury hospitality, premium services, Stockholm, Dubai, events, catering"
+/>
 
 <!-- Open Graph Meta Tags -->
-<meta property="og:title" content="Henx Hospitality Group - Luxury Hospitality" />
-<meta property="og:description" content="Luxury international hospitality group delivering premium services with Nordic elegance." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
 
