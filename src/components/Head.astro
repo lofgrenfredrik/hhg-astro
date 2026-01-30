@@ -6,7 +6,6 @@ import { Font } from "astro:assets";
 <Font cssVariable="--font-unna" preload />
 <Font cssVariable="--font-open-sans" preload />
 
-<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -27,3 +26,7 @@ import { Font } from "astro:assets";
 <!-- Accessibility Meta Tags -->
 <meta name="theme-color" content="rgb(2, 2, 2)" />
 <meta name="color-scheme" content="dark" />
+<meta
+  http-equiv="content-security-policy"
+  content="default-src 'self'; img-src 'self' https://res.cloudinary.com; connect-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+/>

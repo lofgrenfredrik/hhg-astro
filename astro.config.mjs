@@ -20,24 +20,6 @@ export default defineConfig({
                 cssVariable: "--font-open-sans",
                 weights: [ "400", "700" ],
         }],
-        csp: {
-            directives: [
-                "default-src 'self'",
-                "img-src 'self' https://res.cloudinary.com",
-                "connect-src 'self'",
-                "frame-ancestors 'none'"
-            ],
-            styleDirective: {
-                resources: [
-                "'self'", "'unsafe-inline'", "'unsafe-eval'"
-                ]
-            },
-            scriptDirective: {
-                resources: [
-                "'self'", "'unsafe-inline'"
-                ]
-            }
-        },
     },
     site: 'https://www.henxhospitality.com',
     integrations: [sitemap(), robotsTxt()]

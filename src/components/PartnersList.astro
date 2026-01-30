@@ -14,9 +14,10 @@ const partners = await getCollection("partners");
           alt={`${partner.data.context?.custom?.alt || `${partner.data.display_name} logo`}`}
           title={`${partner.data.context?.custom?.caption || `Official logo for ${partner.data.display_name}`}`}
           loading="lazy"
+          width={130}
+          height={130}
           crop={{
-            width: 200,
-            height: 200,
+            height: 130,
             type: "fit",
           }}
         />
