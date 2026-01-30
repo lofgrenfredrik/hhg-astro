@@ -26,7 +26,7 @@ body {
   margin: 0 auto;
   padding-inline: 2rem;
   color: var(--muted-foreground);
-  font-family: var(--font-open-sans);
+  font-family: var(--font-open-sans), sans-serif;
   background-color: var(--background);
 }
 
@@ -36,7 +36,7 @@ h1,
   h4,
   h5,
   h6 {
-    font-family: var(--font-unna);
+    font-family: var(--font-unna), serif;
     color: var(--foreground);
     font-weight: 400;
     margin: 0;
@@ -131,11 +131,11 @@ a:focus {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .scroll-line {
     animation: none;
   }
-  
+
   .contact-socials .link-primary:hover {
     transform: none;
   }
