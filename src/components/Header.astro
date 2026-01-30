@@ -5,7 +5,7 @@ import LogoSimple from "../assets/LogoSimple.png";
 
 <header>
   <div class="max-width-wrapper">
-    <a href="/">
+    <a href="/" aria-label="Henx Hospitality Group home page">
       <Picture
         src={LogoSimple}
         alt="HHG Logo"
@@ -13,9 +13,9 @@ import LogoSimple from "../assets/LogoSimple.png";
         formats={["avif", "webp"]}
       />
     </a>
-    <nav>
-      <a href="/" class="link-primary">Home</a>
-      <a href="/events" class="link-primary">Events</a>
+    <nav aria-label="Main navigation">
+      <a href="/" class="link-primary" aria-label="Home" aria-current="page">Home</a>
+      <a href="/events" class="link-primary" aria-label="Events page">Events</a>
     </nav>
   </div>
 </header>

@@ -3,7 +3,7 @@ import { Picture } from "astro:assets";
 import LogoText from "../assets/LogoText.png";
 ---
 
-<footer>
+<footer role="contentinfo">
   <div class="max-width-wrapper container">
     <div class="logo-container">
       <Picture src={LogoText} alt="Henx Hospitality Group" />
@@ -22,22 +22,25 @@ import LogoText from "../assets/LogoText.png";
             target="_blank"
             rel="noopener noreferrer"
             class="link-primary"
+            aria-label="Follow Henx Hospitality Group on Facebook"
           >
             <span>Facebook</span>
           </a>
           <a
-            href="https://www.facebook.com/Henxhospitalitygroup"
+            href="https://www.instagram.com/henxhospitalitygroup"
             target="_blank"
             rel="noopener noreferrer"
             class="link-primary"
+            aria-label="Follow Henx Hospitality Group on Instagram"
           >
             <span>Instagram</span>
           </a>
           <a
-            href="https://www.facebook.com/Henxhospitalitygroup"
+            href="https://www.linkedin.com/company/henx-hospitality-group"
             target="_blank"
             rel="noopener noreferrer"
             class="link-primary"
+            aria-label="Connect with Henx Hospitality Group on LinkedIn"
           >
             <span>LinkedIn</span>
           </a>
@@ -49,19 +52,21 @@ import LogoText from "../assets/LogoText.png";
         <div class="contact-info">
           <p>Email</p>
           <a href="mailto:contact@henxhospitality.com" class="link-primary"
+            aria-label="Email Henx Hospitality Group at contact@henxhospitality.com"
             >contact@henxhospitality.com</a
           >
         </div>
         <div class="contact-info">
           <p>Phone</p>
-          <a href="tel:+46701234567" class="link-primary">+46 70 123 45 67</a>
+          <a href="tel:+46701234567" class="link-primary"
+            aria-label="Call Henx Hospitality Group at +46 70 123 45 67">+46 70 123 45 67</a>
         </div>
       </div>
     </div>
   </div>
 </footer>
 
-<div class="copyright">
+<div class="copyright" role="contentinfo">
   <p>
     © {new Date().getFullYear()} Henx Hospitality Group. All rights reserved.
   </p>

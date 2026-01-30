@@ -5,16 +5,17 @@ import { getCollection } from "astro:content";
 const partners = await getCollection("partners");
 ---
 
-<div class="partners-grid">
+<div class="partners-grid" role="list" aria-label="Partner companies list">
   {
-    partners.map((partner) => (
-      <div class="partner-logo">
+    partners.map((partner, index) => (
+      <div class="partner-logo" role="listitem">
         <CldImage
           src={partner.data.public_id}
-          alt={`${partner.data.context?.custom?.alt || partner.data.display_name}`}
-          title={partner.data.context?.custom?.caption || ""}
+          alt={`${partner.data.context?.custom?.alt || `${partner.data.display_name} logo`}`}
+          title={`${partner.data.context?.custom?.caption || `Official logo for ${partner.data.display_name}`}`}
           width={200}
           height={170}
+          loading="lazy"
         />
       </div>
     ))
