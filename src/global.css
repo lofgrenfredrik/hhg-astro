@@ -65,7 +65,7 @@ p {
   text-transform: uppercase;
   color: var(--primary);
   margin-bottom: 1rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 1px;
 }
 
 .section-header .title {
