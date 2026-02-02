@@ -6,9 +6,12 @@ This file contains guidelines for AI agents working on the HHG Astro project.
 
 This is an Astro 5-based static website for Henx Hospitality Group (HHG), a luxury hospitality company. The project uses:
 - Astro 5.16.11 with TypeScript
-- Regular CSS for styling (via CSS custom properties) in
+- Regular CSS for styling (via CSS custom properties)
+- Biome 2.3.13 for linting and formatting
 - Cloudinary integration for asset management
-- Google Fonts integration (Unna, Open Sans)
+- Google Fonts integration via experimental fonts API (Unna, Open Sans)
+- @astrolib/seo package for SEO management
+- astro-robots-txt for search engine optimization
 
 ## Build/Development Commands
 
@@ -20,6 +23,9 @@ pnpm dev              # Start dev server at localhost:4321
 pnpm build           # Build production site to ./dist/
 pnpm preview         # Preview build locally
 
+# Code Quality
+pnpm biome:check     # Run Biome linting and formatting
+
 # Astro CLI
 pnpm astro ...       # Run CLI commands like astro add, astro check
 pnpm astro -- --help # Get help using the Astro CLI
@@ -30,12 +36,31 @@ pnpm astro -- --help # Get help using the Astro CLI
 ```
 src/
 ├── assets/          # Static assets (images, etc.)
-├── components/      # Astro components (Header.astro, Hero.astro, etc.)
+├── components/      # Astro components (Header.astro, Hero.astro, PartnersList.astro, etc.)
 ├── content/         # Content collections (Cloudinary integration)
 ├── layouts/         # Page layouts (Layout.astro)
 ├── pages/           # Route pages (index.astro, events.astro)
 └── global.css       # Global styles, CSS variables, and utility classes
+
+public/
+├── favicon.ico      # Site favicon
+├── favicon.svg      # SVG favicon
+├── apple-touche-icon.png  # Apple touch icon
+└── og-image.png     # Open Graph image for social sharing
 ```
+
+## Environment Variables
+
+Create a `.env` file in the project root with the following Cloudinary configuration:
+
+```env
+# Cloudinary Configuration
+PUBLIC_CLOUDINARY_CLOUD_NAME="YOUR_CLOUD_NAME"
+PUBLIC_CLOUDINARY_API_KEY="YOUR_API_KEY"
+CLOUDINARY_API_SECRET="YOUR_API_SECRET"
+```
+
+These variables are required for content collections and asset management via Cloudinary.
 
 ## Global CSS Architecture
 
@@ -73,8 +98,20 @@ Utility classes are created in `global.css` when:
 - Used for: Header navigation, Footer links
 - Provides: `text-decoration: none`, `transition: color 0.3s ease-in-out`
 - Hover: `color: var(--primary)`
+- Focus: Enhanced focus state with background styling
+- Focus Visible: Additional focus styling for accessibility
 - Inherits base color from global `body` (`var(--muted-foreground)`)
 - HTML usage: `<a href="#" class="link-primary">`
+
+**`.sr-only`**
+- Used for: Screen reader-only text accessibility
+- Provides: Visually hidden but accessible to screen readers
+- HTML usage: `<span class="sr-only">Screen reader text</span>`
+
+**Focus Management Classes**
+- `.link-primary:focus`, `.partner-logo:focus`: Enhanced focus states
+- `a:focus`: Global focus styling with outline
+- Motion preferences support with `@media (prefers-reduced-motion: reduce)`
 
 ### CSS Precedence Strategy
 **HTML Class Order:** Apply global classes first, component classes last
@@ -178,6 +215,7 @@ import Asset from "../assets/asset.png";
 - Images stored in `src/assets/` or managed via Cloudinary
 - Use `astro:assets` `Picture` component for optimized images
 - Content collections defined in `src/content/config.ts`
+- Uses `cldAssetsLoader` with folder "Partners" in Cloudinary
 
 ## Common Patterns
 
@@ -210,6 +248,11 @@ For components that need both global utility and specific styling:
 - Component-specific responsive behaviors
 - When global utility classes conflict with component requirements
 
+**PartnersList Component Classes**
+- `.partners-grid`: Grid layout for partner logos
+- `.partner-logo`: Individual partner logo styling with focus states
+- Used specifically in PartnersList.astro for Cloudinary asset display
+
 ### Page Creation
 1. Create in `src/pages/` with route-based naming
 2. Wrap in `Layout` component
@@ -230,12 +273,44 @@ For components that need both global utility and specific styling:
 ## Development Workflow
 1. Run `pnpm dev` for local development
 2. Test responsive design at different breakpoints
-3. Use `pnpm build` to verify production build
-4. Check `pnpm preview` before deployment
+3. Use `pnpm biome:check` for linting and formatting
+4. Use `pnpm build` to verify production build
+5. Check `pnpm preview` before deployment
 
 ## Font Usage
-- `--font-unna`: Headings (serif)
+- `--font-unna`: Headings (serif) - weights: 400, 700
 - `--font-open-sans`: Body text and navigation (sans-serif)
+
+## SEO Configuration
+
+The project uses `@astrolib/seo` package for comprehensive SEO management. SEO is implemented using the `AstroSeo` component in pages.
+
+### Implementation Example
+```astro
+---
+import AstroSeo from '@astrolib/seo/components/AstroSeo.astro';
+---
+
+<AstroSeo
+  title="Page Title"
+  description="Page description for SEO"
+  openGraph={{
+    url: 'https://example.com/page',
+    title: 'Page Title',
+    description: 'Page description for SEO',
+    images: [{
+      url: '/og-image.png',
+      width: 1200,
+      height: 630,
+      alt: 'Open Graph image description',
+    }],
+  }}
+  canonical="https://example.com/page"
+/>
+```
+
+### Robots.txt Integration
+The `astro-robots-txt` integration automatically generates `robots.txt` for search engine optimization. Configuration is handled in `astro.config.mjs`.
 
 ## Testing
 No specific test framework is configured. Verify functionality by:
@@ -278,6 +353,7 @@ No specific test framework is configured. Verify functionality by:
 | `.section-header` | Section title pattern with padding | About, Partners | `padding-block: 7rem` at 1024px+ |
 | `.text-body` | Standard paragraph styling | About, Partners, Footer | None |
 | `.link-primary` | Primary link with hover | Header, Footer | None |
+| | `.sr-only` | Screen reader accessibility | Accessibility features | None |
 
 ### Detailed Class Documentation
 
@@ -356,6 +432,23 @@ No specific test framework is configured. Verify functionality by:
 **HTML Pattern:** `<a href="#" class="link-primary">`
 **Component Overrides:** Can add hover transforms, borders, etc.
 
+#### `.sr-only`
+```css
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+```
+**When to Use:** Screen reader-only text accessibility
+**HTML Pattern:** `<span class="sr-only">Screen reader text</span>`
+**Purpose:** Visually hidden but accessible to screen readers
 ### Adding New Utility Classes
 
 Follow these criteria when creating new global utility classes:
