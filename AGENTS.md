@@ -200,6 +200,46 @@ import Asset from "../assets/asset.png";
 3. **Patterns:** Use global utility classes for common layouts
 4. **Media Queries:** Prefer global responsive behavior
 
+#### CSS Unit Guidelines
+
+Follow these unit usage rules for consistent, maintainable code:
+
+**rem Units - For Font Sizes and Spacing**
+- Use `rem` for all font sizes (e.g., `font-size: 1.125rem`)
+- Use `rem` for padding and margins (e.g., `padding: 1.5rem`, `margin-bottom: 2rem`)
+- Use `rem` for media query breakpoints (e.g., `@media (min-width: 64rem)`)
+
+**em Units - For Component-Relative Scaling**
+- Use `em` for component-specific padding/margins that should scale with the component's font size
+- Use `em` for component-specific font sizes that need to be relative to their parent
+
+**px Units - For Fixed, Precise Measurements**
+- Use `px` for borders (e.g., `border: 1px solid`)
+- Use `px` for box shadows (e.g., `box-shadow: 0 2px 4px rgba(0,0,0,0.1)`)
+- Use `px` for letter-spacing (e.g., `letter-spacing: 1px`)
+- Use `px` for fixed-size icons or precise positioning
+
+**Examples:**
+```css
+/* Correct - rem for fonts and spacing */
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Correct - em for component-relative sizing */
+.button {
+  padding: 0.75em 1.5em; /* Scales with button's font size */
+}
+
+/* Correct - px for fixed measurements */
+.card {
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  letter-spacing: 1px;
+}
+```
+
 ### Error Handling
 - Use Astro's error boundaries where appropriate
 - Validate props in component frontmatter
@@ -268,7 +308,7 @@ For components that need both global utility and specific styling:
 - **Global responsive patterns**: Use `.section-header` responsive behavior
 - **Component-specific**: Keep unique responsive styles in component
 - **Never duplicate**: Don't override global responsive behavior locally
-- **Breakpoint consistency**: Use `min-width: 1024px` for desktop patterns
+- **Breakpoint consistency**: Use `min-width: 64rem` for desktop patterns
 
 ## Development Workflow
 1. Run `pnpm dev` for local development
@@ -350,7 +390,7 @@ No specific test framework is configured. Verify functionality by:
 | Class | Purpose | Used By | Responsive Behavior |
 |--------|---------|-----------|-------------------|
 | `.max-width-wrapper` | Centered container with max-width | Header, Footer, About, Partners | None |
-| `.section-header` | Section title pattern with padding | About, Partners | `padding-block: 7rem` at 1024px+ |
+| `.section-header` | Section title pattern with padding | About, Partners | `padding-block: 7rem` at 64rem+ |
 | `.text-body` | Standard paragraph styling | About, Partners, Footer | None |
 | `.link-primary` | Primary link with hover | Header, Footer | None |
 | | `.sr-only` | Screen reader accessibility | Accessibility features | None |
@@ -382,7 +422,7 @@ No specific test framework is configured. Verify functionality by:
   text-transform: uppercase;
   color: var(--primary);
   margin-bottom: 1rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 1px;
 }
 
 .section-header .title {
@@ -390,7 +430,7 @@ No specific test framework is configured. Verify functionality by:
   margin-bottom: 1rem;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 64rem) {
   .section-header {
     padding-block: 7rem;
   }
