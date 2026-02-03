@@ -1,13 +1,42 @@
 ---
+import "../global.css";
+import { Font } from "astro:assets";
 import Footer from "../components/Footer.astro";
-import Head from "../components/Head.astro";
 import Header from "../components/Header.astro";
 ---
+
+<Font cssVariable="--font-unna" preload />
+<Font cssVariable="--font-open-sans" preload />
 
 <!doctype html>
 <html lang="en">
   <meta charset="UTF-8" />
-  <Head />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="generator" content={Astro.generator} />
+
+  <!-- Essential Meta Tags for Accessibility & SEO -->
+  <meta name="author" content="Henx Hospitality Group" />
+  <meta
+    name="keywords"
+    content="luxury hospitality, premium services, Stockholm, Dubai, events, catering"
+  />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={Astro.url} />
+
+  <!-- Accessibility Meta Tags -->
+  <meta name="theme-color" content="rgb(2, 2, 2)" />
+  <meta name="color-scheme" content="dark" />
+
+  <meta
+    http-equiv="content-security-policy"
+    content="default-src 'self'; img-src 'self' https://res.cloudinary.com; connect-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+  />
+
   <body>
     <Header />
     <main>

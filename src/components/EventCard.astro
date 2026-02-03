@@ -19,8 +19,8 @@ const { title, description, images, date, location } = Astro.props;
       <Image
         src={image}
         alt={title}
-        width={800}
-        height={600}
+        width={600}
+        height={400}
         format="avif"
         loading={index === 0 ? "eager" : "lazy"}
         class="main-image"
@@ -123,12 +123,12 @@ const { title, description, images, date, location } = Astro.props;
   // Initialize each EventCard instance with component-scoped event delegation
   document.addEventListener('DOMContentLoaded', () => {
     const eventCards = document.querySelectorAll('article');
-    
+
     eventCards.forEach(article => {
       // Click event delegation for dots and thumbnails
       article.addEventListener('click', (e) => {
         const clickedElement = (e.target as HTMLElement).closest('.image-dot, .thumbnail');
-        
+
         if (clickedElement) {
           const imageIndex = parseInt((clickedElement as HTMLElement).dataset.imageIndex || '0');
           setActiveImage(imageIndex, article);
@@ -138,7 +138,7 @@ const { title, description, images, date, location } = Astro.props;
       // Component-scoped keyboard navigation
       article.addEventListener('keydown', (e) => {
         const focusedElement = document.activeElement as HTMLElement;
-        
+
         // Only handle keyboard navigation if the focused element is within this article
         if (article.contains(focusedElement) && focusedElement?.classList.contains('thumbnail')) {
           const currentIndex = parseInt(focusedElement.dataset.imageIndex || '0');
@@ -285,9 +285,8 @@ const { title, description, images, date, location } = Astro.props;
     transition: all 0.3s ease;
     scroll-snap-align: start;
     flex-shrink: 0;
-    flex-basis: 100px;
-    width: 100px;
-    /* min-width and max-width are redundant with flex-shrink: 0 */
+    flex-basis: 70px;
+    width: 70px;
   }
 
   .thumbnail img {
@@ -367,31 +366,6 @@ const { title, description, images, date, location } = Astro.props;
   .thumbnails-wrapper::after {
     right: 0;
     background: linear-gradient(to left, var(--background), transparent);
-  }
-
-  /* Responsive typography and thumbnails */
-  @media (max-width: 768px) {
-    .thumbnails {
-      gap: 0.25rem;
-    }
-    .thumbnail {
-      flex-basis: 80px;
-      width: 80px;
-      min-width: 80px;
-      max-width: 80px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .thumbnails {
-      gap: 0.125rem;
-    }
-    .thumbnail {
-      flex-basis: 70px;
-      width: 70px;
-      min-width: 70px;
-      max-width: 70px;
-    }
   }
 
   @media (min-width: 768px) {
