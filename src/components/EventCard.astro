@@ -15,18 +15,18 @@ const { title, description, images, date, location } = Astro.props;
 <article data-active-image="0">
   {/* Main Image */}
   <div class="image-container">
-    {images[0] && (
+    {images.map((image, index) => (
       <Image
-        src={images[0]}
+        src={image}
         alt={title}
         width={800}
         height={600}
-            format="avif"
-        loading="lazy"
+        format="avif"
+        loading={index === 0 ? "eager" : "lazy"}
         class="main-image"
-        data-image-index="0"
+        data-image-index={index}
       />
-    )}
+    ))}
     <div class="gradient-overlay" />
 
     {/* Image navigation dots */}
@@ -38,7 +38,7 @@ const { title, description, images, date, location } = Astro.props;
             data-active={index === 0 ? "true" : "false"}
             data-image-index={index}
             aria-label={`View image ${index + 1}`}
-            onclick={`setActiveImage(${index})`}
+            onclick={`setActiveImage(${index}, this)`}
           />
         ))}
       </div>
@@ -47,27 +47,29 @@ const { title, description, images, date, location } = Astro.props;
 
   {/* Thumbnail Gallery */}
   {images.length > 1 && (
-    <div class="thumbnails">
-      {images.slice(0, 4).map((image, index) => (
-        <button
-          class="thumbnail"
-          data-active={index === 0 ? "true" : "false"}
-          data-image-index={index}
-          aria-label={`${title} - Image ${index + 1}`}
-          onclick={`setActiveImage(${index})`}
-        >
-          {image && (
-            <Image
-              src={image}
-              alt={`${title} - Image ${index + 1}`}
-              width={200}
-              height={200}
-              format="avif"
-              loading="lazy"
-            />
-          )}
-        </button>
-      ))}
+    <div class="thumbnails-wrapper" role="region" aria-label="Image thumbnails, use arrow keys to navigate, enter or space to select">
+      <div class="thumbnails">
+        {images.map((image, index) => (
+          <button
+            class="thumbnail"
+            data-active={index === 0 ? "true" : "false"}
+            data-image-index={index}
+            aria-label={`${title} - Image ${index + 1}`}
+            onclick={`setActiveImage(${index}, this)`}
+          >
+            {image && (
+              <Image
+                src={image}
+                alt={`${title} - Image ${index + 1}`}
+                width={200}
+                height={200}
+                format="avif"
+                loading="lazy"
+              />
+            )}
+          </button>
+        ))}
+      </div>
     </div>
   )}
 
@@ -90,23 +92,26 @@ const { title, description, images, date, location } = Astro.props;
 </article>
 
 <script>
-  function setActiveImage(index: number) {
-    const article = document.querySelector('article');
-    const mainImage = article?.querySelector('.main-image');
+  function scrollThumbnailIntoView(index: number, targetElement: HTMLElement) {
+    const article = targetElement.closest('article');
+    const thumbnail = article?.querySelector(`.thumbnail[data-image-index="${index}"]`);
+
+    if (thumbnail) {
+      thumbnail.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
+  }
+
+  function setActiveImage(index: number, targetElement: HTMLElement) {
+    const article = targetElement.closest('article');
     const dots = article?.querySelectorAll('.image-dot');
     const thumbnails = article?.querySelectorAll('.thumbnail');
 
     if (article) {
       article.setAttribute('data-active-image', index.toString());
-    }
-
-    // Update main image
-    if (mainImage) {
-      const images = JSON.parse(mainImage.getAttribute('data-images') || '[]');
-      if (images[index]) {
-        mainImage.setAttribute('src', images[index]);
-        mainImage.setAttribute('data-image-index', index.toString());
-      }
     }
 
     // Update dots active state
@@ -118,7 +123,32 @@ const { title, description, images, date, location } = Astro.props;
     thumbnails?.forEach((thumb, i) => {
       thumb.setAttribute('data-active', (i === index).toString());
     });
+
+    // Auto-scroll thumbnail into view
+    scrollThumbnailIntoView(index, targetElement);
   }
+
+  // Add keyboard navigation for thumbnails
+  document.addEventListener('keydown', (e) => {
+    const focusedThumbnail = document.activeElement;
+    if (focusedThumbnail?.classList.contains('thumbnail')) {
+      const wrapper = focusedThumbnail.closest('.thumbnails-wrapper');
+        const currentIndex = parseInt((focusedThumbnail as HTMLElement).dataset.imageIndex || '0');
+      const allThumbnails = wrapper?.querySelectorAll('.thumbnail');
+
+      if (e.key === 'ArrowLeft' && currentIndex > 0 && allThumbnails) {
+        e.preventDefault();
+        const prevThumbnail = allThumbnails[currentIndex - 1] as HTMLElement;
+        prevThumbnail?.focus();
+        prevThumbnail?.click();
+      } else if (e.key === 'ArrowRight' && allThumbnails && currentIndex < allThumbnails.length - 1) {
+        e.preventDefault();
+        const nextThumbnail = allThumbnails[currentIndex + 1] as HTMLElement;
+        nextThumbnail?.focus();
+        nextThumbnail?.click();
+      }
+    }
+  });
 
   // Make function globally available
   (window as any).setActiveImage = setActiveImage;
@@ -145,7 +175,22 @@ const { title, description, images, date, location } = Astro.props;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.7s ease;
+    transition: opacity 0.3s ease, transform 0.7s ease;
+    opacity: 0;
+  }
+
+  /* Show active image based on data-active-image attribute */
+  article[data-active-image="0"] .main-image[data-image-index="0"],
+  article[data-active-image="1"] .main-image[data-image-index="1"],
+  article[data-active-image="2"] .main-image[data-image-index="2"],
+  article[data-active-image="3"] .main-image[data-image-index="3"],
+  article[data-active-image="4"] .main-image[data-image-index="4"],
+  article[data-active-image="5"] .main-image[data-image-index="5"],
+  article[data-active-image="6"] .main-image[data-image-index="6"],
+  article[data-active-image="7"] .main-image[data-image-index="7"],
+  article[data-active-image="8"] .main-image[data-image-index="8"],
+  article[data-active-image="9"] .main-image[data-image-index="9"] {
+    opacity: 1;
   }
 
   article:hover .main-image {
@@ -187,11 +232,35 @@ const { title, description, images, date, location } = Astro.props;
     width: 1.5rem;
   }
 
-  .thumbnails {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
+  .thumbnails-wrapper {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    -webkit-overflow-scrolling: touch;
     margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .thumbnails-wrapper::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .thumbnails-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .thumbnails-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: 3px;
+  }
+
+  .thumbnails {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    min-width: max-content;
+    scroll-snap-type: x mandatory;
   }
 
   .thumbnail {
@@ -202,6 +271,12 @@ const { title, description, images, date, location } = Astro.props;
     background: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    flex-basis: 100px;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
   }
 
   .thumbnail img {
@@ -261,7 +336,53 @@ const { title, description, images, date, location } = Astro.props;
     outline-offset: 2px;
   }
 
-  /* Responsive typography */
+  /* Scroll indicators for visual polish */
+  .thumbnails-wrapper::before,
+  .thumbnails-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .thumbnails-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, var(--background), transparent);
+  }
+
+  .thumbnails-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, var(--background), transparent);
+  }
+
+  /* Responsive typography and thumbnails */
+  @media (max-width: 768px) {
+    .thumbnails {
+      gap: 0.25rem;
+    }
+    .thumbnail {
+      flex-basis: 80px;
+      width: 80px;
+      min-width: 80px;
+      max-width: 80px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .thumbnails {
+      gap: 0.125rem;
+    }
+    .thumbnail {
+      flex-basis: 70px;
+      width: 70px;
+      min-width: 70px;
+      max-width: 70px;
+    }
+  }
+
   @media (min-width: 768px) {
     h3 {
       font-size: 2.5rem;
@@ -283,6 +404,18 @@ const { title, description, images, date, location } = Astro.props;
     .image-dot,
     .thumbnail {
       transition-duration: 0.01ms;
+    }
+
+    .thumbnails-wrapper {
+      scroll-behavior: auto;
+    }
+
+    .thumbnail {
+      scroll-snap-align: unset;
+    }
+
+    .thumbnails {
+      scroll-snap-type: unset;
     }
 
     article:hover .main-image {
