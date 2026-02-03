@@ -58,18 +58,17 @@ p {
   text-align: center;
 }
 
-.section-header .pre-title {
+.pre-title {
   display: block;
   font-size: 1rem;
   text-transform: uppercase;
   color: var(--primary);
-  margin-bottom: 1rem;
   letter-spacing: 1px;
 }
 
 .section-header .title {
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-block: 1rem;
 }
 
 /* Body typography used by About, Partners, Footer */

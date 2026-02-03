@@ -1,0 +1,30 @@
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-diamond"></div>
+  <div class="divider-line"></div>
+</div>
+
+<style>
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .divider-line {
+    height: 1px;
+    width: 6rem;
+    background-color: var(--primary-light);
+    opacity: 0.6;
+  }
+
+  .divider-diamond {
+    width: 0.65rem;
+    height: 0.65rem;
+    transform: rotate(45deg);
+    border: 2px solid var(--primary-light);
+    opacity: 0.6;
+    box-sizing: border-box;
+  }
+</style>

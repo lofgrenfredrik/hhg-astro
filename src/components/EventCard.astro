@@ -1,0 +1,292 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  title: string;
+  description?: string;
+  images: Array<string>;
+  date?: string;
+  location?: string;
+}
+
+const { title, description, images, date, location } = Astro.props;
+---
+
+<article data-active-image="0">
+  {/* Main Image */}
+  <div class="image-container">
+    {images[0] && (
+      <Image
+        src={images[0]}
+        alt={title}
+        width={800}
+        height={600}
+            format="avif"
+        loading="lazy"
+        class="main-image"
+        data-image-index="0"
+      />
+    )}
+    <div class="gradient-overlay" />
+
+    {/* Image navigation dots */}
+    {images.length > 1 && (
+      <div class="image-dots">
+        {images.map((_, index) => (
+          <button
+            class="image-dot"
+            data-active={index === 0 ? "true" : "false"}
+            data-image-index={index}
+            aria-label={`View image ${index + 1}`}
+            onclick={`setActiveImage(${index})`}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+
+  {/* Thumbnail Gallery */}
+  {images.length > 1 && (
+    <div class="thumbnails">
+      {images.slice(0, 4).map((image, index) => (
+        <button
+          class="thumbnail"
+          data-active={index === 0 ? "true" : "false"}
+          data-image-index={index}
+          aria-label={`${title} - Image ${index + 1}`}
+          onclick={`setActiveImage(${index})`}
+        >
+          {image && (
+            <Image
+              src={image}
+              alt={`${title} - Image ${index + 1}`}
+              width={200}
+              height={200}
+              format="avif"
+              loading="lazy"
+            />
+          )}
+        </button>
+      ))}
+    </div>
+  )}
+
+  {/* Event Details */}
+  <div class="event-details">
+    {(date || location) && (
+      <div class="event-meta">
+        {date && <span>{date}</span>}
+        {date && location && <span class="separator">—</span>}
+        {location && <span>{location}</span>}
+      </div>
+    )}
+
+    <h3>{title}</h3>
+
+    {description && (
+      <p>{description}</p>
+    )}
+  </div>
+</article>
+
+<script>
+  function setActiveImage(index: number) {
+    const article = document.querySelector('article');
+    const mainImage = article?.querySelector('.main-image');
+    const dots = article?.querySelectorAll('.image-dot');
+    const thumbnails = article?.querySelectorAll('.thumbnail');
+
+    if (article) {
+      article.setAttribute('data-active-image', index.toString());
+    }
+
+    // Update main image
+    if (mainImage) {
+      const images = JSON.parse(mainImage.getAttribute('data-images') || '[]');
+      if (images[index]) {
+        mainImage.setAttribute('src', images[index]);
+        mainImage.setAttribute('data-image-index', index.toString());
+      }
+    }
+
+    // Update dots active state
+    dots?.forEach((dot, i) => {
+      dot.setAttribute('data-active', (i === index).toString());
+    });
+
+    // Update thumbnails active state
+    thumbnails?.forEach((thumb, i) => {
+      thumb.setAttribute('data-active', (i === index).toString());
+    });
+  }
+
+  // Make function globally available
+  (window as any).setActiveImage = setActiveImage;
+</script>
+
+<style>
+  article {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image-container {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background-color: var(--border);
+  }
+
+  .image-container .main-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+
+  article:hover .main-image {
+    transform: scale(1.05);
+  }
+
+  .gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(2, 2, 2, 0.6), transparent, transparent);
+  }
+
+  .image-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .image-dot {
+    width: 0.5rem;
+    height: 0.7rem;
+    border-radius: calc(infinity * 1px);
+    border: none;
+    background-color: rgb(238, 238, 238, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .image-dot:hover {
+    background-color: rgb(238, 238, 238, 0.6);
+  }
+
+  .image-dot[data-active="true"] {
+    background-color: var(--primary);
+    width: 1.5rem;
+  }
+
+  .thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .thumbnail {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .thumbnail[data-active="true"] {
+    border: 2px solid var(--primary);
+  }
+
+  .thumbnail:not([data-active="true"]) {
+    opacity: 0.6;
+  }
+
+  .thumbnail:hover {
+    opacity: 1;
+  }
+
+  .event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .event-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.0625rem;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+
+  .separator {
+    color: var(--muted-foreground);
+  }
+
+  h3 {
+    font-size: 2rem;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  p {
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  /* Focus management for accessibility */
+  .image-dot:focus,
+  .thumbnail:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  /* Responsive typography */
+  @media (min-width: 768px) {
+    h3 {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    h3 {
+      font-size: 3rem;
+    }
+  }
+
+  /* Respect user motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .image-container .main-image {
+      transition-duration: 0.01ms;
+    }
+
+    .image-dot,
+    .thumbnail {
+      transition-duration: 0.01ms;
+    }
+
+    article:hover .main-image {
+      transform: none;
+    }
+  }
+</style>
