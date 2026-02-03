@@ -38,7 +38,6 @@ const { title, description, images, date, location } = Astro.props;
             data-active={index === 0}
             data-image-index={index}
             aria-label={`View image ${index + 1}`}
-            onclick={`setActiveImage(${index}, this)`}
           />
         ))}
       </div>
@@ -55,7 +54,6 @@ const { title, description, images, date, location } = Astro.props;
             data-active={index === 0}
             data-image-index={index}
             aria-label={`${title} - Image ${index + 1}`}
-            onclick={`setActiveImage(${index}, this)`}
           >
               <Image
                 src={image}
@@ -90,9 +88,8 @@ const { title, description, images, date, location } = Astro.props;
 </article>
 
 <script>
-  function scrollThumbnailIntoView(index: number, targetElement: HTMLElement) {
-    const article = targetElement.closest('article');
-    const thumbnail = article?.querySelector(`.thumbnail[data-image-index="${index}"]`);
+  function scrollThumbnailIntoView(index: number, article: HTMLElement) {
+    const thumbnail = article.querySelector(`.thumbnail[data-image-index="${index}"]`);
 
     if (thumbnail) {
       thumbnail.scrollIntoView({
@@ -103,53 +100,65 @@ const { title, description, images, date, location } = Astro.props;
     }
   }
 
-  function setActiveImage(index: number, targetElement: HTMLElement) {
-    const article = targetElement.closest('article');
-    const dots = article?.querySelectorAll('.image-dot');
-    const thumbnails = article?.querySelectorAll('.thumbnail');
+  function setActiveImage(index: number, article: HTMLElement) {
+    const dots = article.querySelectorAll('.image-dot');
+    const thumbnails = article.querySelectorAll('.thumbnail');
 
-    if (article) {
-      article.setAttribute('data-active-image', index.toString());
-    }
+    // Update active image state
+    article.setAttribute('data-active-image', index.toString());
 
     // Update all interactive elements with dataset properties
-    dots?.forEach((dot, i) => {
+    dots.forEach((dot, i) => {
       (dot as HTMLElement).dataset.active = (i === index).toString();
     });
 
-    thumbnails?.forEach((thumb, i) => {
+    thumbnails.forEach((thumb, i) => {
       (thumb as HTMLElement).dataset.active = (i === index).toString();
     });
 
     // Auto-scroll thumbnail into view
-    scrollThumbnailIntoView(index, targetElement);
+    scrollThumbnailIntoView(index, article);
   }
 
-  // Single global event listener with component scoping via DOM traversal
-  document.addEventListener('keydown', (e) => {
-    const focusedThumbnail = document.activeElement;
-    if (focusedThumbnail?.classList.contains('thumbnail')) {
-      // Component identification via DOM traversal
-      const article = focusedThumbnail.closest('article');
-      const currentIndex = parseInt((focusedThumbnail as HTMLElement).dataset.imageIndex || '0');
-      const allThumbnails = article?.querySelectorAll('.thumbnail');
-      
-      if (e.key === 'ArrowLeft' && currentIndex > 0 && allThumbnails) {
-        e.preventDefault();
-        const prevThumbnail = allThumbnails[currentIndex - 1] as HTMLElement;
-        prevThumbnail?.focus();
-        prevThumbnail?.click();
-      } else if (e.key === 'ArrowRight' && allThumbnails && currentIndex < allThumbnails.length - 1) {
-        e.preventDefault();
-        const nextThumbnail = allThumbnails[currentIndex + 1] as HTMLElement;
-        nextThumbnail?.focus();
-        nextThumbnail?.click();
-      }
-    }
-  });
+  // Initialize each EventCard instance with component-scoped event delegation
+  document.addEventListener('DOMContentLoaded', () => {
+    const eventCards = document.querySelectorAll('article');
+    
+    eventCards.forEach(article => {
+      // Click event delegation for dots and thumbnails
+      article.addEventListener('click', (e) => {
+        const clickedElement = (e.target as HTMLElement).closest('.image-dot, .thumbnail');
+        
+        if (clickedElement) {
+          const imageIndex = parseInt((clickedElement as HTMLElement).dataset.imageIndex || '0');
+          setActiveImage(imageIndex, article);
+        }
+      });
 
-  // Make function globally available
-  (window as any).setActiveImage = setActiveImage;
+      // Component-scoped keyboard navigation
+      article.addEventListener('keydown', (e) => {
+        const focusedElement = document.activeElement as HTMLElement;
+        
+        // Only handle keyboard navigation if the focused element is within this article
+        if (article.contains(focusedElement) && focusedElement?.classList.contains('thumbnail')) {
+          const currentIndex = parseInt(focusedElement.dataset.imageIndex || '0');
+          const allThumbnails = article.querySelectorAll('.thumbnail');
+
+          if (e.key === 'ArrowLeft' && currentIndex > 0 && allThumbnails) {
+            e.preventDefault();
+            const prevThumbnail = allThumbnails[currentIndex - 1] as HTMLElement;
+            prevThumbnail?.focus();
+            prevThumbnail?.click();
+          } else if (e.key === 'ArrowRight' && allThumbnails && currentIndex < allThumbnails.length - 1) {
+            e.preventDefault();
+            const nextThumbnail = allThumbnails[currentIndex + 1] as HTMLElement;
+            nextThumbnail?.focus();
+            nextThumbnail?.click();
+          }
+        }
+      });
+    });
+  });
 </script>
 
 <style>
