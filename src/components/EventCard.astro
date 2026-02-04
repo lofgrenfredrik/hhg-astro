@@ -47,25 +47,27 @@ const { title, description, images, date, location } = Astro.props;
 
   {/* Thumbnail Gallery */}
   {images.length > 1 && (
-    <div class="thumbnails-wrapper" role="region" aria-label="Image thumbnails, use arrow keys to navigate, enter or space to select">
-      <div class="thumbnails">
-        {images.map((image, index) => (
-          <button
-            class="thumbnail"
-            data-active={index === 0}
-            data-image-index={index}
-            aria-label={`${title} - Image ${index + 1}`}
-          >
-              <Image
-                src={image}
-                alt={`${title} - Image ${index + 1}`}
-                width={200}
-                height={200}
-                format="avif"
-                loading="lazy"
-              />
-          </button>
-        ))}
+    <div class="thumbnail.thumbnails-wrapper">
+      <div class="thumbnails-scroll-container" role="region" aria-label="Image thumbnails, use arrow keys to navigate, enter or space to select">
+        <div class="thumbnails">
+          {images.map((image, index) => (
+            <button
+              class="thumbnail"
+              data-active={index === 0}
+              data-image-index={index}
+              aria-label={`${title} - Image ${index + 1}`}
+            >
+                <Image
+                  src={image}
+                  alt={`${title} - Image ${index + 1}`}
+                  width={200}
+                  height={200}
+                  format="avif"
+                  loading="lazy"
+                />
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   )}
@@ -248,25 +250,29 @@ const { title, description, images, date, location } = Astro.props;
     width: 1.5rem;
   }
 
-  .thumbnails-wrapper {
+  .thumbnails-scroll-container {
     overflow-x: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
     -webkit-overflow-scrolling: touch;
-    margin-bottom: 1.5rem;
     position: relative;
     padding: 0.5rem 0;
   }
 
-  .thumbnails-wrapper::-webkit-scrollbar {
+  .thumbnails-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .thumbnails-scroll-container::-webkit-scrollbar {
     height: 6px;
   }
 
-  .thumbnails-wrapper::-webkit-scrollbar-track {
+  .thumbnails-scroll-container::-webkit-scrollbar-track {
     background: transparent;
   }
 
-  .thumbnails-wrapper::-webkit-scrollbar-thumb {
+  .thumbnails-scroll-container::-webkit-scrollbar-thumb {
     background-color: var(--border);
     border-radius: 3px;
   }
@@ -278,6 +284,7 @@ const { title, description, images, date, location } = Astro.props;
     gap: 0.5rem;
     min-width: max-content;
     scroll-snap-type: x mandatory;
+    padding-inline: 0.5rem;
   }
 
   .thumbnail {
@@ -425,7 +432,7 @@ const { title, description, images, date, location } = Astro.props;
       transition-duration: 0.01ms;
     }
 
-    .thumbnails-wrapper {
+    .thumbnails-scroll-container {
       scroll-behavior: auto;
     }
 
