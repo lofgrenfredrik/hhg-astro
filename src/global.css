@@ -91,7 +91,7 @@ p {
 }
 
 /* Responsive section header - matches About.astro desktop padding */
-@media (min-width: 1024px) {
+@media (min-width: 64rem) {
   .section-header {
     padding-block: 7rem;
   }
