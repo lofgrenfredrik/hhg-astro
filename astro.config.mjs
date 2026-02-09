@@ -12,12 +12,17 @@ export default defineConfig({
             provider: fontProviders.google(),
             name: "Unna",
             cssVariable: "--font-unna",
+            weights: [ "400" ],
+            },{
+            provider: fontProviders.google(),
+            name: "Cormorant Garamond",
+            cssVariable: "--font-header",
             weights: [ "400", "700" ],
             },
             {
                 provider: fontProviders.google(),
                 name: "Open Sans",
-                cssVariable: "--font-open-sans",
+                cssVariable: "--font-body",
                 weights: [ "400", "700" ],
         }],
     },

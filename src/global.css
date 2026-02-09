@@ -26,7 +26,7 @@ body {
   margin: 0 auto;
   padding-inline: 2rem;
   color: var(--muted-foreground);
-  font-family: var(--font-open-sans), sans-serif;
+  font-family: var(--font-body), sans-serif;
   background-color: var(--background);
 }
 
@@ -36,7 +36,7 @@ h1,
   h4,
   h5,
   h6 {
-    font-family: var(--font-unna), serif;
+    font-family: var(--font-header), serif;
     color: var(--foreground);
     font-weight: 400;
     margin: 0;
