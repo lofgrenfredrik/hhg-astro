@@ -1,0 +1,16 @@
+---
+import eventImage1 from "../assets/events/event-1.jpg";
+import eventImage6 from "../assets/events/event-6.jpg";
+import EventCard from "../components/EventCard.astro";
+
+const eventData = {
+  title: "Nordic Leadership Summit",
+  description:
+    "A prestigious gathering of industry leaders and visionaries in Stockholm. The summit featured thought-provoking discussions, networking opportunities, and exclusive dining experiences in a refined Nordic setting.",
+  date: "October 2024",
+  location: "Stockholm",
+  images: [eventImage6, eventImage1],
+};
+---
+
+<EventCard {...eventData} />

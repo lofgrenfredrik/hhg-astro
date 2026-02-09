@@ -1,0 +1,17 @@
+---
+import eventImage1 from "../assets/events/event-1.jpg";
+import eventImage2 from "../assets/events/event-2.jpg";
+import eventImage3 from "../assets/events/event-3.jpg";
+import EventCard from "../components/EventCard.astro";
+
+const eventData = {
+  title: "Annual Gala Dinner",
+  description:
+    "An exquisite evening of fine dining and entertainment at the Grand Ballroom. Our signature event brought together distinguished guests from across the globe for an unforgettable celebration of luxury hospitality.",
+  date: "December 2024",
+  location: "Dubai",
+  images: [eventImage1, eventImage2, eventImage3],
+};
+---
+
+<EventCard {...eventData} />

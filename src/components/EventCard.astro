@@ -4,7 +4,8 @@ import { Image } from "astro:assets";
 interface Props {
   title: string;
   description?: string;
-  images: Array<string>;
+  // biome-ignore lint/suspicious/noExplicitAny: Astro image metadata requires any type
+  images: Array<any>;
   date?: string;
   location?: string;
 }

@@ -1,49 +1,11 @@
 ---
 import { AstroSeo } from "@astrolib/seo";
 import Divider from "../components/Divider.astro";
-import EventCard from "../components/EventCard.astro";
-import event1 from "../images/events/event-1.jpg";
-import event2 from "../images/events/event-2.jpg";
-import event3 from "../images/events/event-3.jpg";
-import event4 from "../images/events/event-4.jpg";
-import event5 from "../images/events/event-5.jpg";
-import event6 from "../images/events/event-6.jpg";
+import AnnualGalaDinner from "../events/AnnualGalaDinner.astro";
+import IntimatePrivateCelebration from "../events/IntimatePrivateCelebration.astro";
+import NordicLeadershipSummit from "../events/NordicLeadershipSummit.astro";
+import PrivateYachtExperience from "../events/PrivateYachtExperience.astro";
 import Layout from "../layouts/Layout.astro";
-
-const events = [
-  {
-    title: "Annual Gala Dinner",
-    description:
-      "An exquisite evening of fine dining and entertainment at the Grand Ballroom. Our signature event brought together distinguished guests from across the globe for an unforgettable celebration of luxury hospitality.",
-    date: "December 2024",
-    location: "Dubai",
-    images: ["/events/gala-dinner-1.jpg", "/events/gala-dinner-2.jpg", "/events/gala-dinner-3.jpg"],
-  },
-  {
-    title: "Private Yacht Experience",
-    description:
-      "An exclusive sunset cruise through Dubai Marina aboard a luxury superyacht. Guests enjoyed premium champagne service, gourmet catering, and breathtaking views of the iconic skyline.",
-    date: "November 2024",
-    location: "Dubai Marina",
-  },
-  {
-    title: "Nordic Leadership Summit",
-    description:
-      "A prestigious gathering of industry leaders and visionaries in Stockholm. The summit featured thought-provoking discussions, networking opportunities, and exclusive dining experiences in a refined Nordic setting.",
-    date: "October 2024",
-    location: "Stockholm",
-  },
-  {
-    title: "Intimate Private Celebration",
-    description:
-      "A bespoke celebration crafted for our most discerning clients. Every detail was meticulously curated to create a truly personal and memorable experience in an exclusive penthouse setting.",
-    date: "September 2024",
-    location: "Stockholm",
-  },
-];
-
-const images = [event1, event2, event3, event4, event2, event5, event6];
-const images2 = [event5, event6];
 ---
 
 <AstroSeo
@@ -78,15 +40,10 @@ const images2 = [event5, event6];
   </section>
 
   <section class="max-width-wrapper event-grid">
-    {events.map((event, index) => (
-      <EventCard
-        title={event.title}
-        description={event.description}
-        date={event.date}
-        location={event.location}
-        images={index % 2 === 0 ? images : images2}
-        />
-    ))}
+    <AnnualGalaDinner />
+    <PrivateYachtExperience />
+    <NordicLeadershipSummit />
+    <IntimatePrivateCelebration />
   </section>
 
 </Layout>
