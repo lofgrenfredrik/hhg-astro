@@ -9,9 +9,10 @@ This is an Astro 5-based static website for Henx Hospitality Group (HHG), a luxu
 - Regular CSS for styling (via CSS custom properties)
 - Biome 2.3.13 for linting and formatting
 - Cloudinary integration for asset management
-- Google Fonts integration via experimental fonts API (Unna, Open Sans)
+- Google Fonts integration via experimental fonts API (Cormorant Garamond, Open Sans, Unna)
 - @astrolib/seo package for SEO management
 - astro-robots-txt for search engine optimization
+- @astrojs/sitemap for XML sitemap generation
 
 ## Build/Development Commands
 
@@ -24,7 +25,7 @@ pnpm build           # Build production site to ./dist/
 pnpm preview         # Preview build locally
 
 # Code Quality
-pnpm biome:check     # Run Biome linting and formatting
+pnpm biome:check     # Run Biome linting and formatting (includes --write flag)
 
 # Astro CLI
 pnpm astro ...       # Run CLI commands like astro add, astro check
@@ -36,16 +37,16 @@ pnpm astro -- --help # Get help using the Astro CLI
 ```
 src/
 ├── assets/          # Static assets (images, etc.)
-├── components/      # Astro components (Header.astro, Hero.astro, PartnersList.astro, etc.)
+├── components/      # Astro components (Header.astro, Hero.astro, PartnersList.astro, Divider.astro, Partners.astro, EventCard.astro, Footer.astro, About.astro)
 ├── content/         # Content collections (Cloudinary integration)
 ├── layouts/         # Page layouts (Layout.astro)
-├── pages/           # Route pages (index.astro, events.astro)
+├── pages/           # Route pages (index.astro, events.astro, 404.astro)
 └── global.css       # Global styles, CSS variables, and utility classes
 
 public/
 ├── favicon.ico      # Site favicon
 ├── favicon.svg      # SVG favicon
-├── apple-touche-icon.png  # Apple touch icon
+├── apple-touche-icon.png  # Apple touch icon (note: should be apple-touch-icon.png)
 └── og-image.png     # Open Graph image for social sharing
 ```
 
@@ -61,6 +62,54 @@ CLOUDINARY_API_SECRET="YOUR_API_SECRET"
 ```
 
 These variables are required for content collections and asset management via Cloudinary.
+
+### Cloudinary Content Collections
+
+The project uses Cloudinary for partner logo asset management via the `astro-cloudinary` package.
+
+#### Configuration
+
+**Content Collection Definition (`src/content/config.ts`)**
+```typescript
+import { defineCollection } from "astro:content";
+import { cldAssetsLoader } from "astro-cloudinary/loaders";
+
+export const collections = {
+  partners: defineCollection({
+    loader: cldAssetsLoader({
+      folder: "Partners", // Cloudinary folder name
+    }),
+  }),
+};
+```
+
+#### Asset Management
+
+- **Cloudinary Folder:** "Partners" - Contains partner logo assets
+- **Loader:** `cldAssetsLoader` - Handles Cloudinary asset loading
+- **Component Usage:** Partner logos accessed via `PartnersList.astro` using `getCollection("partners")`
+
+#### Dependencies
+
+- `astro-cloudinary` v1.3.5 - Astro integration for Cloudinary
+- `cloudinary` v2.9.0 - Core Cloudinary SDK
+
+## Dependencies
+
+The project uses the following key dependencies:
+
+### Core Framework
+- `astro` v5.16.11 - Astro framework
+- `@biomejs/biome` v2.3.13 - Linting and formatting
+
+### SEO & Optimization
+- `@astrolib/seo` v1.0.0-beta.8 - SEO management
+- `astro-robots-txt` v1.0.0 - Search engine optimization
+- `@astrojs/sitemap` v3.7.0 - XML sitemap generation
+
+### Asset Management
+- `astro-cloudinary` v1.3.5 - Astro integration for Cloudinary
+- `cloudinary` v2.9.0 - Core Cloudinary SDK
 
 ## Global CSS Architecture
 
@@ -108,8 +157,14 @@ Utility classes are created in `global.css` when:
 - Provides: Visually hidden but accessible to screen readers
 - HTML usage: `<span class="sr-only">Screen reader text</span>`
 
+**Footer-Specific Classes**
+- `.contact-container`: Individual contact section containers in Footer
+- `.contact-info`: Contact information styling in Footer
+- `.contact-socials`: Social media links container in Footer
+
 **Focus Management Classes**
 - `.link-primary:focus`, `.partner-logo:focus`: Enhanced focus states
+- `.contact-info .link-primary:focus`: Footer contact links focus states
 - `a:focus`: Global focus styling with outline
 - Motion preferences support with `@media (prefers-reduced-motion: reduce)`
 
@@ -179,8 +234,9 @@ import Asset from "../assets/asset.png";
 
 #### Typography & Color Inheritance
 **Global Font Settings:**
-- `body` has `font-family: var(--font-open-sans)` (inherited by all text)
-- All `h1-h6` have `font-family: var(--font-unna)` (inherited by headings)
+- `body` has `font-family: var(--font-body)` (inherited by all text)
+- All `h1-h6` have `font-family: var(--font-header)` (inherited by headings)
+- **Hero Exception:** Hero.astro h1 uses `--font-unna` for hero-specific styling
 - **Never re-declare** `font-family` unless overriding global defaults
 
 **Global Color Settings:**
@@ -293,6 +349,34 @@ For components that need both global utility and specific styling:
 - `.partner-logo`: Individual partner logo styling with focus states
 - Used specifically in PartnersList.astro for Cloudinary asset display
 
+**Divider Component Classes**
+- `.divider`: Container for divider elements with centered alignment
+- `.divider-line`: Horizontal line elements
+- `.divider-diamond`: Rotated square diamond element
+- Used specifically in Hero.astro for visual separation
+
+**EventCard Component Classes**
+- `.event-card`: Individual event card container
+- `.event-date`: Event date styling
+- `.event-title`: Event title styling
+- Used specifically in events.astro for event display
+
+**Footer Component Classes**
+- `.container`: Grid layout for footer content
+- `.logo-container`: Logo and description container
+- `.contact-sections`: Flex container for contact sections
+- `.copyright`: Copyright notice styling
+- Used specifically in Footer.astro for site footer
+
+**About Component Classes**
+- `.about-grid`: Grid layout for about content
+- `.about-text`: About text content styling
+- Used specifically in About.astro for about section
+
+**Partners Component Classes**
+- `.partners-container`: Main partners section container
+- Used specifically in Partners.astro as wrapper for PartnersList
+
 ### Page Creation
 1. Create in `src/pages/` with route-based naming
 2. Wrap in `Layout` component
@@ -318,8 +402,9 @@ For components that need both global utility and specific styling:
 5. Check `pnpm preview` before deployment
 
 ## Font Usage
-- `--font-unna`: Headings (serif) - weights: 400, 700
-- `--font-open-sans`: Body text and navigation (sans-serif)
+- `--font-header` (Cormorant Garamond): Standard headings (serif) - weights: 400, 700
+- `--font-body` (Open Sans): Body text and navigation (sans-serif) - weights: 400, 700
+- `--font-unna` (Unna): Hero-specific styling for main title only (weight: 400)
 
 ## SEO Configuration
 
@@ -382,6 +467,7 @@ No specific test framework is configured. Verify functionality by:
 2. **Don't Re-declare Colors**: Already set globally with proper inheritance
 3. **Don't Duplicate Media Queries**: Use global responsive patterns where possible
 4. **Don't Mix Class Order**: Always global-first, component-last
+5. **Don't Forget Footer Classes**: `.contact-container`, `.contact-info`, `.contact-socials` are available globally
 
 ## Utility Classes Reference
 
@@ -393,7 +479,15 @@ No specific test framework is configured. Verify functionality by:
 | `.section-header` | Section title pattern with padding | About, Partners | `padding-block: 7rem` at 64rem+ |
 | `.text-body` | Standard paragraph styling | About, Partners, Footer | None |
 | `.link-primary` | Primary link with hover | Header, Footer | None |
-| | `.sr-only` | Screen reader accessibility | Accessibility features | None |
+| `.sr-only` | Screen reader accessibility | Accessibility features | None |
+
+### Footer-Specific Classes
+
+| Class | Purpose | Used By | Responsive Behavior |
+|--------|---------|-----------|-------------------|
+| `.contact-container` | Individual contact section containers | Footer | None |
+| `.contact-info` | Contact information styling | Footer | None |
+| `.contact-socials` | Social media links container | Footer | None |
 
 ### Detailed Class Documentation
 
@@ -489,6 +583,43 @@ No specific test framework is configured. Verify functionality by:
 **When to Use:** Screen reader-only text accessibility
 **HTML Pattern:** `<span class="sr-only">Screen reader text</span>`
 **Purpose:** Visually hidden but accessible to screen readers
+
+#### `.contact-container`
+```css
+.contact-container h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+```
+**When to Use:** Individual contact section containers in Footer
+**HTML Pattern:** `<div class="contact-container">`
+
+#### `.contact-info`
+```css
+.contact-info p {
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.contact-info .link-primary {
+  display: block;
+  margin-top: 0.25rem;
+}
+```
+**When to Use:** Contact information styling in Footer
+**HTML Pattern:** `<div class="contact-info">`
+
+#### `.contact-socials`
+```css
+.contact-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+```
+**When to Use:** Social media links container in Footer
+**HTML Pattern:** `<div class="contact-socials">`
 ### Adding New Utility Classes
 
 Follow these criteria when creating new global utility classes:
