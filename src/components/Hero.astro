@@ -4,7 +4,7 @@ import Divider from "./Divider.astro";
 
 <section role="banner" aria-labelledby="hero-title">
   <h1 id="hero-title">Henx Hospitality Group</h1>
-  <Divider>
+  <Divider />
   <p>
     Henx Hospitality Group is a luxury international hospitality group based in
     Stockholm and operating in Dubai. HHG offers an exquisite range of premium
@@ -22,7 +22,7 @@ import Divider from "./Divider.astro";
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
     text-align: center;
     gap: 2rem;
   }
@@ -39,30 +39,6 @@ import Divider from "./Divider.astro";
     margin: 0 auto;
     max-width: 42rem;
     line-height: 1.6;
-  }
-
-  .divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-block: 2.5rem;
-  }
-
-  .divider-line {
-    height: 1px;
-    width: 4rem;
-    background-color: var(--primary-light);
-    opacity: 0.6;
-  }
-
-  .divider-diamond {
-    width: 0.65rem;
-    height: 0.65rem;
-    transform: rotate(45deg);
-    border: 2px solid var(--primary-light);
-    opacity: 0.6;
-    box-sizing: border-box;
   }
 
   .scroll-indicator {

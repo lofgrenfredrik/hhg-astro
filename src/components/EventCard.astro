@@ -1,32 +1,39 @@
 ---
-import { Image } from "astro:assets";
+import { CldImage } from "astro-cloudinary";
+
+export type EventImage = {
+  data: {
+    public_id: string;
+    display_name?: string;
+    context?: {
+      custom?: {
+        alt?: string;
+      };
+    };
+  };
+};
 
 interface Props {
   title: string;
   description?: string;
-  // biome-ignore lint/suspicious/noExplicitAny: Astro image metadata requires any type
-  images: Array<any>;
-  date?: string;
-  location?: string;
+  images: Array<EventImage>;
 }
 
-const { title, description, images, date, location } = Astro.props;
+const { title, description, images } = Astro.props;
 ---
 
 <article data-active-image="0">
   {/* Main Image */}
   <div class="image-container">
     {images.map((image, index) => (
-      <Image
-        src={image}
-        alt={title}
-        width={600}
-        height={400}
-        sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 600px"
-        format="avif"
-        loading={index === 0 ? "eager" : "lazy"}
+      <CldImage
         class="main-image"
         data-image-index={index}
+        src={image.data.public_id}
+        alt={`${image.data.context?.custom?.alt || `${image.data.display_name}`}`}
+        loading={index === 0 ? "eager" : "lazy"}
+        width={600}
+        height={400}
       />
     ))}
     <div class="gradient-overlay" />
@@ -58,14 +65,13 @@ const { title, description, images, date, location } = Astro.props;
               data-image-index={index}
               aria-label={`${title} - Image ${index + 1}`}
             >
-                <Image
-                  src={image}
-                  alt={`${title} - Image ${index + 1}`}
-                  width={200}
-                  height={200}
-                  format="avif"
-                  loading="lazy"
-                />
+              <CldImage
+                src={image.data.public_id}
+                alt={`${image.data.context?.custom?.alt || `${image.data.display_name}`}`}
+                loading="lazy"
+                width={100}
+                height={100}
+              />
             </button>
           ))}
         </div>
@@ -75,13 +81,6 @@ const { title, description, images, date, location } = Astro.props;
 
   {/* Event Details */}
   <div class="event-details">
-    {(date || location) && (
-      <div class="event-meta">
-        {date && <span>{date}</span>}
-        {date && location && <span class="separator">—</span>}
-        {location && <span>{location}</span>}
-      </div>
-    )}
 
     <h3>{title}</h3>
 

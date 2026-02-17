@@ -7,7 +7,7 @@ const partners = await getCollection("partners");
 
 <div class="partners-grid" role="list" aria-label="Partner companies list">
   {
-    partners.map((partner, index) => (
+    partners.map((partner) => (
       <div class="partner-logo" role="listitem">
         <CldImage
           src={partner.data.public_id}

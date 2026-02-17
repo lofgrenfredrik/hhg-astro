@@ -1,7 +1,8 @@
 ---
-import eventImage4 from "../assets/events/event-4.jpg";
-import eventImage5 from "../assets/events/event-5.jpg";
+import { getCollection } from "astro:content";
 import EventCard from "../components/EventCard.astro";
+
+const event3 = await getCollection("event3");
 
 const eventData = {
   title: "Private Yacht Experience",
@@ -9,7 +10,7 @@ const eventData = {
     "An exclusive sunset cruise through Dubai Marina aboard a luxury superyacht. Guests enjoyed premium champagne service, gourmet catering, and breathtaking views of the iconic skyline.",
   date: "November 2024",
   location: "Dubai Marina",
-  images: [eventImage4, eventImage5],
+  images: event3,
 };
 ---
 
