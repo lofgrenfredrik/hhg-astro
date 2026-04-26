@@ -1,20 +1,20 @@
 ---
-import { AstroSeo } from "@astrolib/seo";
 import About from "../components/About.astro";
 import Hero from "../components/Hero.astro";
 import Partners from "../components/Partners.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<AstroSeo
+<Layout
   title="Henx Hospitality Group"
   description="Henx Hospitality Group delivers premium hospitality services with Nordic elegance in Stockholm and Dubai."
   openGraph={{
+    title: "Henx Hospitality Group",
     type: "website",
     url: "https://henxhospitality.com",
-    title: "Henx Hospitality Group",
     description:
       "Henx Hospitality Group delivers premium hospitality services with Nordic elegance in Stockholm and Dubai.",
+    site_name: "Henx Hospitality Group",
     images: [
       {
         url: "https://henxhospitality.com/og-image.png",
@@ -24,9 +24,7 @@ import Layout from "../layouts/Layout.astro";
       },
     ],
   }}
-/>
-
-<Layout>
+>
   <Hero />
   <About />
   <Partners />

@@ -1,5 +1,4 @@
 ---
-import { AstroSeo } from "@astrolib/seo";
 import Divider from "../components/Divider.astro";
 import AnnualGalaDinner from "../events/AnnualGalaDinner.astro";
 import NordicLeadershipSummit from "../events/NordicLeadershipSummit.astro";
@@ -7,15 +6,16 @@ import PrivateYachtExperience from "../events/PrivateYachtExperience.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<AstroSeo
+<Layout
   title="Henx Hospitality Group Events"
   description="Explore the events and experiences offered by Henx Hospitality Group."
   openGraph={{
+    title: "Henx Hospitality Group Events",
     type: "website",
     url: "https://henxhospitality.com/events",
-    title: "Henx Hospitality Group Events",
     description:
       "Explore the events and experiences offered by Henx Hospitality Group.",
+    site_name: "Henx Hospitality Group",
     images: [
       {
         url: "https://henxhospitality.com/og-image.png",
@@ -25,9 +25,7 @@ import Layout from "../layouts/Layout.astro";
       },
     ],
   }}
-/>
-
-<Layout>
+>
   <section class="max-width-wrapper first-section">
     <span class="pre-title">Portfolio</span>
     <h1 class="">Executed Events</h1>
@@ -43,12 +41,11 @@ import Layout from "../layouts/Layout.astro";
     <PrivateYachtExperience />
     <NordicLeadershipSummit />
   </section>
-
 </Layout>
 
 <style>
   .first-section {
-   padding-top: 9rem;
+    padding-top: 9rem;
   }
 
   section {
@@ -84,7 +81,7 @@ import Layout from "../layouts/Layout.astro";
 
   @media (min-width: 900px) {
     .event-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 </style>

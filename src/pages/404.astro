@@ -3,22 +3,42 @@ import Divider from "../components/Divider.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-
-<Layout>
+<Layout
+  title="404 - Page Not Found"
+  description="The page you are looking for may have been moved, removed, or is temporarily unavailable."
+  openGraph={{
+    title: "404 - Page Not Found",
+    type: "website",
+    url: "https://henxhospitality.com/404",
+    description:
+      "The page you are looking for may have been moved, removed, or is temporarily unavailable.",
+    site_name: "Henx Hospitality Group",
+    images: [
+      {
+        url: "https://henxhospitality.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Henx Hospitality Group",
+      },
+    ],
+  }}
+>
   <section>
     <p class="error-code">404</p>
     <Divider />
     <h1>Page Not Found</h1>
-    <p>The page you are looking for may have been moved, removed, or is temporarily unavailable.</p>
+    <p>
+      The page you are looking for may have been moved, removed, or is
+      temporarily unavailable.
+    </p>
 
     <a href="/" class="return-home-link">
-      <span class="return-home-line"/>
+      <span class="return-home-line"></span>
       <span>Return to Home</span>
-      <span class="return-home-line"/>
+      <span class="return-home-line"></span>
     </a>
   </section>
 </Layout>
-
 
 <style>
   section {
