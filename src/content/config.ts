@@ -19,7 +19,7 @@ export const collections = {
   }),
   event3: defineCollection({
     loader: cldAssetsLoader({
-      folder: "Events/Test", // The folder in Cloudinary
+      folder: "Events/Test3", // The folder in Cloudinary
     }),
   }),
 };
